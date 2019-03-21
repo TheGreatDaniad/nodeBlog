@@ -1,0 +1,42 @@
+ 
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/semantic/dist/semantic.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+    script(src='https://cloud.tinymce.com/5/tinymce.min.js?apiKey=your_API_key')
+      |   
+      script.
+        tinymce.init({
+        selector: '#mytextarea'
+        });
+
+    script(src='/semantic/dist/semantic.js')
+  body
+    script(src='/semantic/dist/semantic.js')
+
+    div.ui.secondary.menu 
+      div.ui.container
+        a.active.item(href='/') 
+          i.home.icon 
+          |Home
+        a.item(href='/contact')
+          | Contact Us 
+        div.right.item 
+          a.item(href='/users/login')
+            i.sign-in.icon 
+            |Sign In 
+          a.item(href='/users/register') 
+            i.user.icon
+            |Register
+
+
+    br
+    div.ui.text.container
+    
+     block content
+      
+     
+        
+      

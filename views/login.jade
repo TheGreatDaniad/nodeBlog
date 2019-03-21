@@ -1,0 +1,28 @@
+extends layout
+
+
+
+
+block content 
+    div.ui.grid
+        div.ui.four.wide.column.center.aligned
+        div.ui.eight.wide.column.center.aligned
+            div.column 
+                div.content1 
+                    i.sign-in.icon 
+                    | log-in to your account 
+                br
+                form.ui.form(method="POST",action="")
+                    div.field 
+                        label Username
+                        div.ui.left.icon.input
+                            i.user.icon
+                            input(type="text",name="username",placeholder="username")
+                    div.field
+                        label Password
+                        div.ui.left.icon.input 
+                            i.lock.icon
+                            input(type="password",name="password",placeholder="password")
+                    button.ui.primary.button(type="submit") log-in
+
+

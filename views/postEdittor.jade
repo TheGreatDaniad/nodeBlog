@@ -1,0 +1,24 @@
+extends layout
+
+
+block content 
+    form.ui.form 
+        div.field 
+            label Title : 
+            div.ui.left.icon.input
+                i.clipboard.icon 
+                input(type="text",name="title",placeholder="title")
+        div.field 
+            label Author : 
+            select.ui.fluid.dropdown 
+                option(value='admin') admin 
+                option(value='user') user
+        div.field 
+            label Image : 
+            input(type="file",name="image")
+            
+            
+        div.field 
+            label body : 
+            textarea(name="textarea", cols="30", rows="10")
+        button.ui.primary.button(type="submit") Publish        

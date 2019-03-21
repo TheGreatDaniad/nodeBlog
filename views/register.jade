@@ -1,0 +1,46 @@
+extends layout 
+
+block content 
+    div.ui.grid 
+        div.ui.eight.wide.column.center.aligned   
+            div.column 
+                if errors 
+                    for error in errors 
+                        div.ui.negative.message
+                         i.close.icon
+                         script
+                            $(".close.icon").click(function(){$(this).parent().hide();});
+                         | #{error.msg}
+
+                        
+                div.content1 
+                    |Register Here 
+                form.ui.form(method="POST",action="")
+                    div.field 
+                        label name 
+                        input(type="text",name="name",placeholder="full name",value=name)   
+                    div.field 
+                        label email
+                        input(type="email",name="email",placeholder="email address",value=email)   
+                    div.field 
+                        label username 
+                        input(type="text",name="username",placeholder="username",value=username)   
+                    div.field 
+                        label password 
+                        input(type="password",name="password1",placeholder="password")   
+                    div.field 
+                        label confirm password
+                        input(type="password",name="password2",placeholder="confirm password") 
+                    button.ui.primary.button(type="submit") Register
+        div.ui.eight.wide.column.center.aligned 
+            div.column
+                div.content1 by registering at here you can post your content at this blog
+                
+
+                        
+                      
+
+
+                    
+                    
+                         
