@@ -24,17 +24,26 @@ html
         a.item(href='/contact')
           | Contact Us 
         div.right.item 
-          a.item(href='/users/login')
-            i.sign-in.icon 
-            |Sign In 
-          a.item(href='/users/register') 
-            i.user.icon
-            |Register
+          if !user
+            a.item(href='/users/login')
+              i.sign-in.icon 
+              |Sign In 
+            a.item(href='/users/register') 
+              i.user.icon
+              |Register
+          if user 
+            a.item(href='/users/login')
+              i.sign-in.icon 
+              |Dashboard 
+            a.item(href='/users/register') 
+              i.user.icon
+              |Log Out
 
 
     br
     div.ui.text.container
-    
+     !=messages()
+     
      block content
       
      

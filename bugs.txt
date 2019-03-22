@@ -1,1 +1,2 @@
 when click on closing sign 'x' at the error messages of register pages , it wond close error
+showing messages in a decent UI 

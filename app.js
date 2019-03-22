@@ -9,6 +9,9 @@ var mongodb=require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser=require('body-parser');
 var expressValidator = require('express-validator');
+var flash = require('connect-flash');
+var session = require('express-session')
+var expressMessages = require('express-messages');
 
 
 var indexRouter = require('./routes/index');
@@ -26,6 +29,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+app.use(session({
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -33,7 +46,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(expressValidator());
 app.use(passport.initialize());
-app.use(passport.session())
 // Validator
 /*
 app.use(expressValidator({
@@ -56,7 +68,10 @@ app.use(expressValidator({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin',adminRouter)
-
+app.get('*',function(req,res,next){
+  res.locals.user = req.user || null ;
+  next();
+})
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/users');
 var passport = require('passport');
 var localStrategy=require('passport-local').Strategy;
+var hashing = require('node-php-password');
 
 
 passport.use(new localStrategy(function(username,password,done){
@@ -10,12 +11,16 @@ passport.use(new localStrategy(function(username,password,done){
     if (err) throw err;
     if (!user) {
       console.log('unknown user');
-      return done(null,false,{message:'user not found'});
+      return done(null,false,{message:'user not found',failureFlash:'user not found'});
     }
-    if(user.password!=password){
-      return done(null,false , {message : 'password is wrong'});
+    if(hashing.verify(password,user.password)){
+      console.log(user.username ,' logged in')
+
+      return done (null,user);
     }
-    return done (null,user);
+    else{
+    return done(null,false , {message : 'password is wrong',failureFlash: 'password is wrong'});
+    }
   });
 }));
 
@@ -35,15 +40,21 @@ passport.deserializeUser(function(id, done) {
 /* GET users listing. */
 
 router.get('/login',function(req,res){
-  res.render('login',{flash:req.flash});
+  res.render('login');
 });
 router.get('/register',function(req,res){
   res.render('register');
 });
 
-router.post('/login',passport.authenticate('local'),function(req,res){
+router.post('/login',passport.authenticate('local',{
+  successRedirect:'/',
+  successFlash:'you are logged in successfully',
+  failureRedirect:'/users/login',
+  failureFlash:'invalid credentials'
+}),
+function(req,res){
 
-req.flash='you are logged in ';
+req.flash('flash','you are logged in ');
 res.redirect('/');
 });
 
@@ -52,7 +63,9 @@ router.post('/register',function(req,res){
   username=req.body.username;
   email=req.body.email;
   password=req.body.password1;
+  hashedPassword = hashing.hash(password);
   console.log(req.body);
+
   //form errors
   req.checkBody('name','name is required').notEmpty();
   req.checkBody('username','username is required').notEmpty();
@@ -76,10 +89,10 @@ router.post('/register',function(req,res){
         name:name,
         email:email,
         username:username,
-        password:password
+        password:hashedPassword
       });
       newUser.save();
-      req.flash='you registered successfully';
+      req.flash('you registered successfully');
       res.render('index');
   }
 });
