@@ -24,11 +24,14 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//enables flash messages and session
 app.use(require('connect-flash')());
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
@@ -40,12 +43,19 @@ app.use(session({
   resave: true
 }));
 
+//passport initialize
+app.use(passport.initialize());
+app.use(passport.session());
+//body parser initialize
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended:true
 }));
+
+//express validator
 app.use(expressValidator());
-app.use(passport.initialize());
+
+
 // Validator
 /*
 app.use(expressValidator({
@@ -65,13 +75,19 @@ app.use(expressValidator({
   }
 }));
 */
+
+//variables for using in template
+app.use(function(req,res,next){
+  res.locals.user = req.user || null ;
+  res.locals.path = req.path;
+  next();
+});
+
+//routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin',adminRouter)
-app.get('*',function(req,res,next){
-  res.locals.user = req.user || null ;
-  next();
-})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

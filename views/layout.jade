@@ -13,16 +13,37 @@ html
         });
 
     script(src='/semantic/dist/semantic.js')
+    script(src='https://code.jquery.com/jquery-3.3.1.js')
+    script(src='/semantic/dist/components/transition.min.js')
+    script(src='/semantic/dist/components/dropdown.min.js')
+
+
   body
     script(src='/semantic/dist/semantic.js')
 
-    div.ui.secondary.menu 
-      div.ui.container
+    div.ui.fixed.borderless.inverted.menu 
+      div.ui.text.container
+        
         a.active.item(href='/') 
           i.home.icon 
           |Home
         a.item(href='/contact')
           | Contact Us 
+        a.ui.right.floated.dropdown.item(href='#')
+          | Dropdown 
+          i.dropdown.icon
+          .menu
+            .item Link Item
+            .item Link Item
+            .divider
+            .header Header Item
+            .item
+              i.dropdown.icon
+              |             Sub Menu
+              .menu
+                .item Link Item
+                .item Link Item
+            .item Link Item
         div.right.item 
           if !user
             a.item(href='/users/login')
@@ -32,15 +53,14 @@ html
               i.user.icon
               |Register
           if user 
-            a.item(href='/users/login')
-              i.sign-in.icon 
+            a.item(href='/admin')
+              i.id.card.outline.icon 
               |Dashboard 
-            a.item(href='/users/register') 
-              i.user.icon
+            a.item(href='/users/logout') 
+              i.sign-out.icon
               |Log Out
+    img.ui.fluid.image(src="/images/header.jpeg")
 
-
-    br
     div.ui.text.container
      !=messages()
      
