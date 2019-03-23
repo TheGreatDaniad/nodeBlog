@@ -18,6 +18,8 @@ var multer = require('multer');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var postRouter  = require('./routes/posts');
+
 
 var app = express();
 
@@ -78,8 +80,8 @@ app.use(function(req,res,next){
 //routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/admin',adminRouter)
-
+app.use('/admin',adminRouter);
+app.use('/posts',postRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

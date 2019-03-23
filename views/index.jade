@@ -6,9 +6,9 @@ block content
       .column
         .ui.raised.segment
           img(src='/#{post.imagePath}',heigth="150px",width="185px")
-          a(href="")
+          a(href="/posts/#{post._id}")
             h1 #{post.title}
           h5 published on #{post.date}
-          p #{post.body}
+          #{post.body}
  
 
