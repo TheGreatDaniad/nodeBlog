@@ -1,8 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-
+  .ui.three.column.stackable.grid
+    for post in posts
+      .column
+        .ui.raised.segment
+          img(src='/#{post.imagePath}',heigth="150px",width="185px")
+          a(href="")
+            h1 #{post.title}
+          h5 published on #{post.date}
+          p #{post.body}
  
 

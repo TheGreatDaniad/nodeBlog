@@ -2,17 +2,22 @@ extends layout
 
 
 block content 
-    form.ui.form 
+    if errors 
+        for error in errors 
+            div.ui.negative.message
+             i.close.icon
+             | #{error.msg}
+    if success 
+        div.ui.positive.message
+            i.close.icon
+            | your post published successfully
+
+    form.ui.form(action="",method="POST",enctype="multipart/form-data")
         div.field 
             label Title : 
             div.ui.left.icon.input
                 i.clipboard.icon 
                 input(type="text",name="title",placeholder="title")
-        div.field 
-            label Author : 
-            select.ui.fluid.dropdown 
-                option(value='admin') admin 
-                option(value='user') user
         div.field 
             label Image : 
             input(type="file",name="image")
@@ -20,5 +25,8 @@ block content
             
         div.field 
             label body : 
-            textarea(name="textarea", cols="30", rows="10")
-        button.ui.primary.button(type="submit") Publish        
+            textarea(name="body", cols="30", rows="10",id="body")
+        button.ui.primary.button(type="submit") Publish  
+        script(src='/ckeditor/ckeditor.js')
+        script
+            | CKEDITOR.replace('body');

@@ -1,2 +1,5 @@
 when click on closing sign 'x' at the error messages of register pages , it wond close error
 showing messages in a decent UI 
+transfer admin.js codes to another file and make a unique admin page wiith admin accesses 
+add categury to posts
+moment module to make times more beauty

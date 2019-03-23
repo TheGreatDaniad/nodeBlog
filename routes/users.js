@@ -87,6 +87,7 @@ router.post('/register',function(req,res){
     email:email,
     username:username
     });
+    
 
 
   }

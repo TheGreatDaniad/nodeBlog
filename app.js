@@ -12,7 +12,8 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session')
 var expressMessages = require('express-messages');
-
+var fileUpload=require('express-fileupload')
+var multer = require('multer');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -25,11 +26,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
+// body parser 
+
+app.use(bodyParser());
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
+
+//enable file upload
+
 
 //enables flash messages and session
 app.use(require('connect-flash')());
@@ -56,30 +66,12 @@ app.use(bodyParser.urlencoded({
 app.use(expressValidator());
 
 
-// Validator
-/*
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
-
-    while(namespace.length) {
-      formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-      param : formParam,
-      msg   : msg,
-      value : value
-    };
-  }
-}));
-*/
 
 //variables for using in template
 app.use(function(req,res,next){
   res.locals.user = req.user || null ;
   res.locals.path = req.path;
+  res.locals.host = req.host;
   next();
 });
 

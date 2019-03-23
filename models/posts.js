@@ -16,16 +16,24 @@ var postSchema = new mongoose.Schema({
 
     },
     date: { 
-        type:date
+        type:Date
     },
     author:{
+        type:String
+    },
+    imagePath:{
         type:String
     },
     categury:{
         type:String
     },
     slug:{
-        type:string,
+        type:String,
         maxlength:120
     }
 });
+
+Post = module.exports = mongoose.model('post',postSchema);
+module.exports.posts = function(callback){
+    Post.find(callback);
+}
