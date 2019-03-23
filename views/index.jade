@@ -8,7 +8,7 @@ block content
           img(src='/#{post.imagePath}',heigth="150px",width="185px")
           a(href="/posts/#{post._id}")
             h1 #{post.title}
-          h5 published on #{post.date}
-          #{post.body}
+          h6 published on #{moment(post.date).format("MM-DD-YYYY")}
+          !{post.body}
  
 
