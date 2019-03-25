@@ -61,12 +61,19 @@ html
               |Log Out
     img.ui.fluid.image(src="/images/header.jpeg")
     br
+    
+    br    
+    div.ui.left.aligned.container
+      .ui.positive.message  
+          i.close.icon   
+          !{messages()}
+      block content
 
-    div.ui.text.container.fluid
-     !=messages()
-     
-     block content
-      
-     
+    .ui.inverted.footer.segment
+      .ui.container
+          |&copy; All Rights Reserved For Danial Dehvan
+    
+    script(src='/semantic/dist/semantic.js')
+
         
       

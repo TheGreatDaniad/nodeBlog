@@ -30,6 +30,13 @@ var postSchema = new mongoose.Schema({
     slug:{
         type:String,
         maxlength:120
+    },
+    category:{
+        type:String,
+        maxlength:100
+    },
+    published:{
+        type:Boolean
     }
 });
 

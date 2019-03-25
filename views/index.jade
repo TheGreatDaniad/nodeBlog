@@ -5,10 +5,14 @@ block content
     for post in posts
       .column
         .ui.raised.segment
-          img(src='/#{post.imagePath}',heigth="150px",width="185px")
-          a(href="/posts/#{post._id}")
-            h1 #{post.title}
-          h6 published on #{moment(post.date).format("MM-DD-YYYY")}
-          !{post.body}
+            a.ui.black.ribbon.label(href="#{post.category}")
+              h4 #{post.category}
+            img(src='/#{post.imagePath}',heigth="250px",width="325px")
+            a(href="/posts/#{post._id}")
+             h2 #{post.title}
+            h6 published on #{moment(post.date).format("MM-DD-YYYY")}
+            !{post.body.substring(0,100)} 
+          
+
  
 

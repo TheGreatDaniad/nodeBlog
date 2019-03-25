@@ -100,7 +100,7 @@ router.post('/register',function(req,res){
       });
       newUser.save();
       req.flash('you registered successfully');
-      res.render('index');
+      res.redirect('/');
   }
 });
 

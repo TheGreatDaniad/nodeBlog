@@ -1,7 +1,29 @@
 extends layout
 
 block content
-    img(src="/#{post.imagePath}",heigth="900",width="700")
-    h1 #{post.title}
-
-    !{post.body}
+    .ui.grid 
+        .ui.twelve.wide.column
+            .column
+                .ui.raised.segment
+                    
+                    .ui.tag.black.label 
+                        i.calendar.alternate.icon  #{moment(post.date).format("MM-DD-YYYY")}
+                    .ui.tag.black.label 
+                        i.folder.icon  #{post.category}
+                    .ui.tag.black.label 
+                        i.user.icon  #{post.author}
+                    if user
+                        a.ui.right.floated.button(href="/admin/edit/#{post._id}") edit post
+                        
+                        
+                    .ui.horizontal.divider.header
+                        |ss
+                    img(src="/#{post.imagePath}",heigth="700",width="800")
+                    h1 #{post.title}
+                    br
+                    !{post.body}
+                
+        .ui.four.wide.column
+            .column
+                .ui.raised.segment
+                   |d

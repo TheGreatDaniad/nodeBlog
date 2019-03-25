@@ -74,7 +74,7 @@ app.use(expressValidator());
 app.use(function(req,res,next){
   res.locals.user = req.user || null ;
   res.locals.path = req.path;
-  res.locals.host = req.host;
+  res.locals.host = req.hostname;
   res.locals.moment= require('moment'); // for making times beautifull
   next();
 });
