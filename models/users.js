@@ -29,6 +29,24 @@ var userSchema = new mongoose.Schema({
         type: String,
         
         
+    },
+    imagePath : {
+        type: String,
+        
+        
+    },
+    role: {
+        type: String,
+        
+        
+    },
+    bio : {
+        type: String,
+        
+        
+    },
+    joined:{
+        type:Date,
     }
 });
 var User = module.exports = mongoose.model('user',userSchema);

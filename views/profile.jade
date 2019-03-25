@@ -1,0 +1,48 @@
+extends layout 
+
+block content 
+    div.ui.grid 
+        div.ui.four.wide.column.center.aligned   
+        div.ui.eight.wide.column.center.aligned   
+            div.column
+                .ui.raised.segment 
+    
+                    if errors 
+                        for error in errors 
+                            div.ui.negative.message
+                                i.close.icon
+                                | #{error.msg}
+
+                            
+                    div.content1 
+                        |edit your profile  
+                    form.ui.form(method="POST",action="")
+                        div.field 
+                            label name 
+                            input(type="text",name="name",placeholder="full name",value=user.name)   
+                        div.field 
+                            label email
+                            input(type="email",name="email",placeholder="email address",value=user.email)   
+                        div.field 
+                            label username 
+                            input(type="text",name="username",placeholder="username",value=user.username)   
+                        div.field 
+                            label Image : 
+                            input(type="file",name="image")
+                        div.field 
+                            label bio : 
+                            textarea(name="body", cols="30", rows="10",id="body",placeholder="a brief introduction of yourself")
+                            |#{user.bio}
+                       
+                        button.ui.primary.button(type="submit") Update
+                        
+       
+                
+
+                            
+                        
+
+
+                        
+                        
+                            

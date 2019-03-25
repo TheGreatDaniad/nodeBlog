@@ -3,6 +3,10 @@ var multer = require('multer');
 var router = express.Router();
 var Post = require('../models/posts');
 var Category = require('../models/categories')
+var User = require('../models/users');
+var hashing = require('node-php-password');
+
+
 
 // SET STORAGE
 var storage = multer.diskStorage({
@@ -15,6 +19,10 @@ var storage = multer.diskStorage({
   });
   
 var upload = multer({ storage: storage });
+
+router.get('/',ensureAuthenticated,function(req,res){
+    res.render('dashboard');
+});
 
 
 router.get('/newpost',ensureAuthenticated,function(req,res){
@@ -40,12 +48,7 @@ router.post('/newpost',ensureAuthenticated,upload.single('image'),function(req,r
         postImagePath         = req.file.path;
         postImageExt          = req.file.extention;
         postImageSize         = req.file.size;
-        console.log(postImageExt);
-        console.log(postImageMimeType);
-        console.log(postImageName);
-        console.log(postImageOriginalName);
-        console.log(postImagePath);
-        console.log(postImageSize);
+      
     }
     else{
         postImagePath = '/noImage.png';
@@ -137,15 +140,10 @@ router.post('/addcategory',ensureAuthenticated,function(req,res){
                 postImagePath         = req.file.path;
                 postImageExt          = req.file.extention;
                 postImageSize         = req.file.size;
-                console.log(postImageExt);
-                console.log(postImageMimeType);
-                console.log(postImageName);
-                console.log(postImageOriginalName);
-                console.log(postImagePath);
-                console.log(postImageSize);
+              
             }
             else{
-                postImagePath = null;
+                postImageName = null;
                 
             }
         
@@ -174,12 +172,87 @@ router.post('/addcategory',ensureAuthenticated,function(req,res){
                     res.redirect('#');
                 }
                
-            });
-              
-            
-            
+            }); 
         });
     
+
+     router.get('/profile/:id',function(req,res){
+    var id = req.params.id;
+    User.findOne({_id:id},function(err,user){
+        if (err) throw err;
+        if (!user) res.sendStatus(404);
+        
+            res.render('profile',{user:user});
+            
+        
+        
+    });
+    });
+
+    router.post('/profile/:id',upload.single('image'),function(req,res){
+        var id = req.params.id;
+        User.findOne({_id:id},function(err,user){
+    if(err) throw err;
+    if(!user) res.status(404);
+    
+    name = req.body.name;
+    username=req.body.username;
+    email=req.body.email;
+    bio=req.body.bio;
+
+  
+  
+    if(req.file){
+      userImageOriginalName = req.file.originalname;
+      userImageName         = req.file.filename;
+      userImageMimeType     = req.file.mimetype;
+      userImagePath         = req.file.path;
+      userImageExt          = req.file.extention;
+      userImageSize         = req.file.size;
+    
+  }
+  else{
+      userImageName = null;
+      
+  }
+  
+    
+  
+    //form errors
+    req.checkBody('name','name is required').notEmpty();
+    req.checkBody('username','username is required').notEmpty();
+    req.checkBody('email','email is required').notEmpty();
+    req.checkBody('email','email is not valid').isEmail();
+  
+    
+    errors = req.validationErrors();
+    if ( errors) {
+      res.render('register',{errors:errors,
+      name:name,
+      email:email,
+      username:username
+      });
+      
+  
+  
+    }
+    else{
+        
+          user.name=name;
+          user.email=email;
+          user.username=username;
+          user.imagePath=userImageName ;
+          user.bio=bio;
+          
+          
+        
+        user.save();
+        req.flash('succes','your information updated successfully');
+        res.redirect('/admin');
+    }
+  });
+});
+  
         
     
 module.exports = router;

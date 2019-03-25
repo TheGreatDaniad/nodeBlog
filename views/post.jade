@@ -16,12 +16,45 @@ block content
                         a.ui.right.floated.button(href="/admin/edit/#{post._id}") edit post
                         
                         
-                    .ui.horizontal.divider.header
-                        |ss
+                    .ui.divider
+                        
                     img(src="/#{post.imagePath}",heigth="700",width="800")
                     h1 #{post.title}
                     br
                     !{post.body}
+            br
+            .column
+                .ui.raised.segment
+                    h1 Comments:
+                    .ui.divider
+                    if errors 
+                        for error in errors 
+                            div.ui.negative.message
+                                i.close.icon
+                                | #{error.msg}
+                    .ui.comments
+                        .comment
+                            for comment in comments
+                                .content
+                                a.author #{comment.name}
+                                .metadata
+                                    .date #{moment(post.date).format("MM-DD-YYYY")}
+                                .text
+                                    | #{comment.body}
+                                .actions
+                                    a.reply.active Reply
+                            form.ui.reply.form(method="POST",action="")
+                                .field 
+                                    input(type="text",name="name",placeholder="full name")   
+                                .field 
+                                    input(type="email",name="email",placeholder="email address")   
+                                
+                                .field
+                                    textarea(name="body",placeholder="your comment")
+                                        
+                                button.ui.primary.submit.labeled.icon.button
+                                    i.icon.edit
+                                    |  Add Reply
                 
         .ui.four.wide.column
             .column

@@ -4,6 +4,21 @@ var User = require('../models/users');
 var passport = require('passport');
 var localStrategy=require('passport-local').Strategy;
 var hashing = require('node-php-password');
+var multer = require('multer');
+
+
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-'+file.originalname)
+  }
+});
+
+var upload = multer({ storage: storage });
+
 
 
 passport.use(new localStrategy(function(username,password,done){
@@ -63,13 +78,28 @@ req.flash('flash','you are logged in ');
 res.redirect('/');
 });
 
-router.post('/register',function(req,res){
+router.post('/register',upload.single('image'),function(req,res){
   name = req.body.name;
   username=req.body.username;
   email=req.body.email;
   password=req.body.password1;
   hashedPassword = hashing.hash(password);
   console.log(req.body);
+
+  if(req.file){
+    userImageOriginalName = req.file.originalname;
+    userImageName         = req.file.filename;
+    userImageMimeType     = req.file.mimetype;
+    userImagePath         = req.file.path;
+    userImageExt          = req.file.extention;
+    userImageSize         = req.file.size;
+  
+}
+else{
+    postImagePath = null;
+    
+}
+
   
 
   //form errors
@@ -96,7 +126,10 @@ router.post('/register',function(req,res){
         name:name,
         email:email,
         username:username,
-        password:hashedPassword
+        password:hashedPassword,
+        imagePath:userImageName ,
+        joined:Date.now(),
+        role:"author"
       });
       newUser.save();
       req.flash('you registered successfully');
