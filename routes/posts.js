@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Post = require('../models/posts');
 var Comment = require('../models/coments')
+
 router.get('/:id',function(req,res){
 var id = req.params.id;
 Post.findOne({_id:id},function(err,post){
@@ -13,11 +14,15 @@ Post.findOne({_id:id},function(err,post){
 });
 });
 });
+
+
 router.post('/:id',function(req,res){
     var id = req.params.id;
     Post.findOne({_id:id},function(err,post){
         if (err) throw err;
         if (!post) res.sendStatus(404);
+        Comment.find({postId:id},function(err,comments){
+
             email = req.body.email;
             name=req.body.name;
             commentBody=req.body.body;
@@ -33,7 +38,7 @@ router.post('/:id',function(req,res){
         
             errors = req.validationErrors();
             if (errors){
-                res.render('post',{errors:errors,post:post})
+                res.render('post',{errors:errors,post:post,comments:comments})
             }
             else{
                 newComment = new Comment({
@@ -52,7 +57,7 @@ router.post('/:id',function(req,res){
             }
         });
     });
-        
+});  
         
  
 module.exports = router;

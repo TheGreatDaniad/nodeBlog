@@ -14,9 +14,11 @@ html
 
     script(src='/semantic/dist/semantic.js')
     script(src='https://code.jquery.com/jquery-3.3.1.js')
+    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js")
     script(src='/semantic/dist/components/transition.min.js')
     script(src='/semantic/dist/components/dropdown.min.js')
-
+    script.
+      $(".close.icon").click(function(){$(this).parent().hide(););
 
   body
     script(src='/semantic/dist/semantic.js')
@@ -29,21 +31,12 @@ html
           |Home
         a.item(href='/contact')
           | Contact Us 
-        a.ui.right.floated.dropdown.item(href='#')
-          | Dropdown 
-          i.dropdown.icon
-          .menu
-            .item Link Item
-            .item Link Item
-            .divider
-            .header Header Item
-            .item
-              i.dropdown.icon
-              |             Sub Menu
-              .menu
-                .item Link Item
-                .item Link Item
-            .item Link Item
+      
+         
+        .ui.inverted.transparent.icon.input
+          input(type='text', placeholder='Search...')
+          i.search.icon
+
         div.right.item 
           if !user
             a.item(href='/users/login')
@@ -66,14 +59,15 @@ html
     div.ui.left.aligned.container
       .ui.positive.message  
           i.close.icon   
+        if messages()
           !{messages()}
       block content
 
     .ui.inverted.footer.segment
       .ui.container
           |&copy; All Rights Reserved For Danial Dehvan
-    
-    script(src='/semantic/dist/semantic.js')
 
-        
-      
+    script.
+        $(".close.icon").click(function(){$(this).parent().hide();});
+
+

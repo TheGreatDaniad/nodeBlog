@@ -1,5 +1,9 @@
 extends layout
-
+script.
+    alert('hello world');
+    $(".close.icon").click(function(){
+    $(this).parent().hide();
+    );
 block content
     .ui.grid 
         .ui.twelve.wide.column
@@ -32,6 +36,8 @@ block content
                             div.ui.negative.message
                                 i.close.icon
                                 | #{error.msg}
+
+                        
                     .ui.comments
                         .comment
                             for comment in comments
@@ -43,6 +49,7 @@ block content
                                     | #{comment.body}
                                 .actions
                                     a.reply.active Reply
+                                .ui.divider
                             form.ui.reply.form(method="POST",action="")
                                 .field 
                                     input(type="text",name="name",placeholder="full name")   
@@ -52,7 +59,7 @@ block content
                                 .field
                                     textarea(name="body",placeholder="your comment")
                                         
-                                button.ui.primary.submit.labeled.icon.button
+                                button.ui.black.submit.labeled.icon.button
                                     i.icon.edit
                                     |  Add Reply
                 
@@ -60,3 +67,9 @@ block content
             .column
                 .ui.raised.segment
                    |d
+        script(src='/semantic/dist/semantic.js')
+        script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js")
+
+        
+        script.
+         $(".close.icon").click(function(){$(this).parent().hide(););
