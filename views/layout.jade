@@ -34,8 +34,8 @@ html
       
          
         .ui.inverted.transparent.icon.input
-          input(type='text', placeholder='Search...')
-          i.search.icon
+          input(type='text', placeholder='Search...',id="searchField")
+          i.inverted.search.link.icon(id="searchButton")
 
         div.right.item 
           if !user
@@ -57,9 +57,8 @@ html
     
     br    
     div.ui.left.aligned.container
-      .ui.positive.message  
+      .ui.positive.message(id="messages")
           i.close.icon   
-        if messages()
           !{messages()}
       block content
 
@@ -67,7 +66,22 @@ html
       .ui.container
           |&copy; All Rights Reserved For Danial Dehvan
 
+    //jquery and ajax
+
     script.
         $(".close.icon").click(function(){$(this).parent().hide();});
+    script.
+        $("#searchButton").click(function(){
+          window.location.href = "/search/" + $("#searchField").val();
+          });
+    script.
+       
+        $('#searchField').keyup(function(e){
+            if(e.keyCode == 13)
+            {
+              window.location.href = "/search/" + $("#searchField").val();
+            }
+        });
 
-
+    script.
+      setTimeout(function(){$("#messages").fadeOut()},4000)

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var textSearch = require('mongoose-text-search');
 mongoose.connect('mongodb://localhost/nodeblog');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -39,7 +40,7 @@ var postSchema = new mongoose.Schema({
         type:Boolean
     }
 });
-
+postSchema.plugin(textSearch);
 Post = module.exports = mongoose.model('post',postSchema);
 module.exports.posts = function(callback){
     Post.find(callback);
